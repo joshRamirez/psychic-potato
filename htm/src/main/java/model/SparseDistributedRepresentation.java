@@ -47,7 +47,7 @@ public class SparseDistributedRepresentation {
         setOfInputs[position] = isOn;
     }
 
-    public LinkedList getActivatedInputs() {
+    public LinkedList<Integer> getActivatedInputs() {
         return activatedInputs;
     }
 

@@ -10,15 +10,13 @@ import java.util.LinkedList;
  * resulting SDR over a time period. The assumption here is that an SDR output would persist in the next levels SDR
  * input for a time period and then leave when that time period is over (this can be due to time or an inhibitory
  * neuron.)
- *
+ * <p>
  * This should represent the union property of SDRs.
  */
 public class SparseDistributedRepresentationList {
     HashMap<LinkedList<Integer>, SparseDistributedRepresentation> SDRs;
-    SparseDistributedRepresentation SDRUnion;
-    //    LinkedList vs int array?
-    //    LinkedList<Integer> SDRActiveCounts;
-    int[] SDRActiveCounts;
+    private SparseDistributedRepresentation SDRUnion;
+    private int[] SDRActiveCounts;
 
     public SparseDistributedRepresentationList() {
         SDRs = new HashMap<LinkedList<Integer>, SparseDistributedRepresentation>();
@@ -38,14 +36,29 @@ public class SparseDistributedRepresentationList {
         if (null == SDRUnion.getSetOfInputs()) {
             SDRActiveCounts = new int[SDR.getSetOfInputs().length];
 
-            for (int i = 0; i < SDR.getActivatedInputs().size(); i++) {
-                SDRActiveCounts[SDR.getActivatedInputs().get(i)] += 1;
-            }
             SDRUnion = SDR;
-        } else {
+        }
 
+        for (int i = 0; i < SDR.getActivatedInputs().size(); i++) {
+            SDRActiveCounts[SDR.getActivatedInputs().get(i)] += 1;
+            SDRUnion.setOnOff(SDR.getActivatedInputs().get(i), true);
         }
     }
 
+    public int[] getSDRActiveCounts() {
+        return SDRActiveCounts;
+    }
+
+    public void setSDRActiveCounts(int[] SDRActiveCounts) {
+        this.SDRActiveCounts = SDRActiveCounts;
+    }
+
+    public SparseDistributedRepresentation getSDRUnion() {
+        return SDRUnion;
+    }
+
+    public void setSDRUnion(SparseDistributedRepresentation SDRUnion) {
+        this.SDRUnion = SDRUnion;
+    }
 
 }

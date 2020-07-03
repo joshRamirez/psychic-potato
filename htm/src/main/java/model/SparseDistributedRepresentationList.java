@@ -10,6 +10,8 @@ import java.util.LinkedList;
  * resulting SDR over a time period. The assumption here is that an SDR output would persist in the next levels SDR
  * input for a time period and then leave when that time period is over (this can be due to time or an inhibitory
  * neuron.)
+ *
+ * This should represent the union property of SDRs.
  */
 public class SparseDistributedRepresentationList {
     HashMap<LinkedList<Integer>, SparseDistributedRepresentation> SDRs;

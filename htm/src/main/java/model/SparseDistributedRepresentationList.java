@@ -1,6 +1,5 @@
 package model;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -15,13 +14,14 @@ import java.util.LinkedList;
  */
 public class SparseDistributedRepresentationList {
     HashMap<LinkedList<Integer>, SparseDistributedRepresentation> SDRs;
+    HashMap<LinkedList<Integer>, Integer> SDRCount;
     private SparseDistributedRepresentation SDRUnion;
     private int[] SDRActiveCounts;
 
     public SparseDistributedRepresentationList() {
         SDRs = new HashMap<LinkedList<Integer>, SparseDistributedRepresentation>();
         SDRUnion = new SparseDistributedRepresentation();
-//        SDRActiveCounts = new LinkedList<Integer>();
+        SDRCount = new HashMap<LinkedList<Integer>, Integer>();
     }
 
     public HashMap<LinkedList<Integer>, SparseDistributedRepresentation> getSDRs() {
@@ -42,6 +42,14 @@ public class SparseDistributedRepresentationList {
         for (int i = 0; i < SDR.getActivatedInputs().size(); i++) {
             SDRActiveCounts[SDR.getActivatedInputs().get(i)] += 1;
             SDRUnion.setOnOff(SDR.getActivatedInputs().get(i), true);
+        }
+
+        SDRs.put(SDR.getActivatedInputs(), SDR);
+
+        if (null == SDRCount.get(SDR.getActivatedInputs())) {
+            SDRCount.put(SDR.getActivatedInputs(), 1);
+        } else {
+            SDRCount.put(SDR.getActivatedInputs(), SDRCount.get(SDR.getActivatedInputs()) + 1);
         }
     }
 

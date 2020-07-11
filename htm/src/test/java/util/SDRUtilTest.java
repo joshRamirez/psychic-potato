@@ -87,6 +87,27 @@ public class SDRUtilTest {
         SparseDistributedRepresentation sdr2 = new SparseDistributedRepresentation();
         sdr2.setSetOfInputs(inputs2);
 
-        assertEquals("Total possible representations are not correct for n = 256 and w = 4", BigInteger.valueOf(174792640), SDRUtil.calculateTotalRepresentations(sdr2));
+        BigInteger expected = BigInteger.valueOf(174792640);
+
+        assertEquals("Total possible representations are not correct for n = 256 and w = 4", expected, SDRUtil.calculateTotalRepresentations(sdr2));
+    }
+
+    @Test
+    public void testCalculateSparsity() {
+        Integer n = 256;
+        Integer w = 4;
+        Integer theta = 3;
+        boolean[] inputs = new boolean[n];
+        inputs[12] = true;
+        inputs[41] = true;
+        inputs[123] = true;
+        inputs[204] = true;
+
+        SparseDistributedRepresentation sdr = new SparseDistributedRepresentation();
+        sdr.setSetOfInputs(inputs);
+
+        Double expected = 0.015625;
+
+        assertEquals("Sparsity is not correct for n = 256 and w = 4", expected, SDRUtil.calculateSparsity(sdr), .0001);
     }
 }

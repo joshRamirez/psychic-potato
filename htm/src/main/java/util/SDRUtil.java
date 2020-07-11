@@ -36,6 +36,10 @@ public class SDRUtil {
         return overlap >= theta;
     }
 
+    public static Double calculateSparsity(SparseDistributedRepresentation sdr) {
+        return Double.valueOf(sdr.getActivatedInputs().size()) / sdr.getSetOfInputs().length;
+    }
+
     /**
      * Follows the formula factorial of total possible positions (of on and off bits) divided by the factorial of on
      * bits times the factorial of off bits.

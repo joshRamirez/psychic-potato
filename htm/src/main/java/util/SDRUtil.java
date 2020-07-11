@@ -2,7 +2,10 @@ package util;
 
 import model.SparseDistributedRepresentation;
 
+import java.math.BigInteger;
+
 public class SDRUtil {
+    // TODO(JOSH): Need to get rid of theta member variable and pass it in. No state in this utility
     private static Integer theta;
 
     public static boolean isMatch(SparseDistributedRepresentation SDR1, SparseDistributedRepresentation SDR2) {
@@ -31,6 +34,28 @@ public class SDRUtil {
         }
 
         return overlap >= theta;
+    }
+
+    /**
+     * Follows the formula factorial of total possible positions (of on and off bits) divided by the factorial of on
+     * bits times the factorial of off bits.
+     *
+     * @param sdr sparse distributed representation we want to calculate the total representations for.
+     * @return total possible representations the SDR can hold.
+     */
+    public static BigInteger calculateTotalRepresentations(SparseDistributedRepresentation sdr) {
+        BigInteger possiblePositions = factorial(sdr.getSetOfInputs().length);
+        BigInteger populatedPositions = factorial(sdr.getActivatedInputs().size()).multiply(factorial(sdr.getSetOfInputs().length - sdr.getActivatedInputs().size()));
+
+        return possiblePositions.divide(populatedPositions);
+    }
+
+    private static BigInteger factorial(int number) {
+        if (number == 1) {
+            return BigInteger.valueOf(1);
+        } else {
+            return BigInteger.valueOf(number).multiply(factorial(number - 1));
+        }
     }
 
     public static Integer getTheta() {

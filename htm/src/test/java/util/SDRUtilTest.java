@@ -73,7 +73,9 @@ public class SDRUtilTest {
         SparseDistributedRepresentation sdr1 = new SparseDistributedRepresentation();
         sdr1.setSetOfInputs(inputs1);
 
-        assertEquals("Total possible representations are not correct for n = 16 and w 2", BigInteger.valueOf(120), SDRUtil.calculateTotalRepresentations(sdr1));
+        BigInteger expected = BigInteger.valueOf(120);
+
+        assertEquals("Total possible representations are not correct for n = 16 and w 2", expected, SDRUtil.calculateTotalRepresentations(sdr1));
 
         Integer n2 = 256;
         Integer w2 = 4;
@@ -87,9 +89,26 @@ public class SDRUtilTest {
         SparseDistributedRepresentation sdr2 = new SparseDistributedRepresentation();
         sdr2.setSetOfInputs(inputs2);
 
-        BigInteger expected = BigInteger.valueOf(174792640);
+        BigInteger expected2 = BigInteger.valueOf(174792640);
 
-        assertEquals("Total possible representations are not correct for n = 256 and w = 4", expected, SDRUtil.calculateTotalRepresentations(sdr2));
+        assertEquals("Total possible representations are not correct for n = 256 and w = 4", expected2, SDRUtil.calculateTotalRepresentations(sdr2));
+    }
+
+    @Test
+    public void testCalculateTotalRepresentationsNoSDR() {
+        Integer n = 16;
+        Integer w = 2;
+        Integer theta = 1;
+        BigInteger expected = BigInteger.valueOf(120);
+
+        assertEquals("Total possible representations are not correct for n = 16 and w 2", expected, SDRUtil.calculateTotalRepresentations(n, w));
+
+        Integer n2 = 256;
+        Integer w2 = 4;
+        Integer theta2 = 3;
+        BigInteger expected2 = BigInteger.valueOf(174792640);
+
+        assertEquals("Total possible representations are not correct for n = 256 and w = 4", expected2, SDRUtil.calculateTotalRepresentations(n2, w2));
     }
 
     @Test

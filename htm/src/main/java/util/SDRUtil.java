@@ -54,6 +54,20 @@ public class SDRUtil {
         return possiblePositions.divide(populatedPositions);
     }
 
+    /**
+     * Calculates total representations using the length and bits passed in as values instead of using an SDR.
+     *
+     * @param inputLength SDR length (total bits which can be either on or off)
+     * @param onBits number of bits that can be on for the SDR
+     * @return
+     */
+    public static BigInteger calculateTotalRepresentations(Integer inputLength, Integer onBits) {
+        BigInteger possiblePositions = factorial(inputLength);
+        BigInteger populatedPositions = factorial(onBits).multiply(factorial(inputLength - onBits));
+
+        return possiblePositions.divide(populatedPositions);
+    }
+
     private static BigInteger factorial(int number) {
         if (number == 1) {
             return BigInteger.valueOf(1);

@@ -3,6 +3,8 @@ package util;
 import model.SparseDistributedRepresentation;
 import org.junit.Test;
 
+import java.math.BigInteger;
+
 import static org.junit.Assert.assertEquals;
 
 public class SDRUtilTest {
@@ -57,5 +59,34 @@ public class SDRUtilTest {
 
         SDRUtil.setTheta(theta);
         assertEquals("SDRs incorrectly matched", false, SDRUtil.isMatch(sdr1, sdr2));
+    }
+
+    @Test
+    public void testCalculateTotalRepresentations() {
+        Integer n = 16;
+        Integer w = 2;
+        Integer theta = 1;
+        boolean[] inputs1 = new boolean[n];
+        inputs1[1] = true;
+        inputs1[12] = true;
+
+        SparseDistributedRepresentation sdr1 = new SparseDistributedRepresentation();
+        sdr1.setSetOfInputs(inputs1);
+
+        assertEquals("Total possible representations are not correct for n = 16 and w 2", BigInteger.valueOf(120), SDRUtil.calculateTotalRepresentations(sdr1));
+
+        Integer n2 = 256;
+        Integer w2 = 4;
+        Integer theta2 = 3;
+        boolean[] inputs2 = new boolean[n2];
+        inputs2[12] = true;
+        inputs2[41] = true;
+        inputs2[123] = true;
+        inputs2[204] = true;
+
+        SparseDistributedRepresentation sdr2 = new SparseDistributedRepresentation();
+        sdr2.setSetOfInputs(inputs2);
+
+        assertEquals("Total possible representations are not correct for n = 256 and w = 4", BigInteger.valueOf(174792640), SDRUtil.calculateTotalRepresentations(sdr2));
     }
 }
